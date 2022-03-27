@@ -48,10 +48,23 @@ form {
     height: 50px;
     border: 1px solid red;
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
+.area_person span {
+    margin-bottom: -2rem;
+    white-space: nowrap;
+}
+.data_person_input input {
+    cursor: not-allowed;
+}
+
+
 .show {
     display: block;
-    border: 1px solid blue
+    border: 1px solid blue;
+
 }
 .person {
     position: absolute;
