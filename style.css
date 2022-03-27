@@ -39,6 +39,7 @@ form {
     height: 100%;
     top:0;
     left: 0;
+    display: none;
 }
 
 .area_person {
@@ -51,4 +52,10 @@ form {
 }
 .show {
     border: 1px solid blue
+}
+.person {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: 1px solid red;
 }
