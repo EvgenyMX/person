@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <form action="/">
+        <label for="">
+            <input type="text" name="text" id="">
+        </label>
+        <label for="">
+            <input type="text" name="pas" id="">
+        </label>
+        <label for="" class="person_input_list">
+            <span>
+                <input type="text" name="person" id="p1">
+                <button class="add_person_area"
+                        data-area="a1"
+                        data-person="p1">
+                    ш
+                </button>
+            </span>
+            <button type="button" class="add_input_person">Добавить</button>
+        </label>
+        <label for="">
+            <input type="text" name="emal" id="">
+        </label>
+        <label for="">
+            <input type="text" name="init" id="">
+        </label>
+        <input type="submit" value="Отправить" class="submit">
+    </form>
+
+    <div class="area">
+        <div class="area_click show"></div>
+        <div class="area_person">
+
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
