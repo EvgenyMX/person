@@ -20,37 +20,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
     let area = document.querySelector('.area');
     let area_click = document.querySelector('.area_click');
     let divRect = area.getBoundingClientRect();
-    console.log(divRect);
-
-    console.log( JSON.stringify( divRect ) );
 
 
-        area_click.addEventListener("click", e => {
-            let relX = e.pageX - divRect.left-25;
-            let relY = e.pageY - divRect.top-25;
-            let location = `top: ${relY}px; left: ${relX}px`;
 
 
-            let id_person = area_click.id;
-            if ( !id_person ) return;
-            let border_person = document.createElement('div');
-            border_person.classList.add('area_person'),
-            border_person.setAttribute('data-pesron', id_person);
+    area_click.addEventListener("click", e => {
+        let relX = e.pageX - divRect.left-25;
+        let relY = e.pageY - divRect.top-25;
+        let location = `top: ${relY}px; left: ${relX}px`;
 
+            $('.area_person').draggable();
 
-            border_person.style.cssText = location;
+        let id_person = area_click.id;
+        if ( !id_person ) return;
+        let border_person = document.createElement('div');
+        border_person.classList.add('area_person'),
+        border_person.setAttribute('data-pesron', id_person);
+        border_person.style.cssText = location;
 
+        if ( area_click.querySelector(`[data-pesron=${id_person}]`) ) {
+            area_click.querySelector(`[data-pesron=${id_person}]`).style.cssText = location;
+            return;
+        } else {
+            area_click.append(border_person);
+        }
 
-            if ( area_click.querySelector(`[data-pesron=${id_person}]`) ) {
-                area_click.querySelector(`[data-pesron=${id_person}]`).style.cssText = location;
-                console.log( area_click.querySelector(`[data-pesron=${id_person}]`) );
-                return;
-            } else {
-                console.log(location);
-                console.log(border_person);
-                area_click.append(border_person);
-            }
-        });
+    });
 
     let form_persone = document.querySelector("form");
 
@@ -76,11 +71,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 
-
-
-
-
-
     // area.addEventListener('mousemove', function(e){
     //     let relX = e.pageX - divRect.left;
     //     let relY = e.pageY - divRect.top;
@@ -99,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     $('form').on('submit', e => {
         e.preventDefault();
         let data_form = $('form').serializeArray() ;
-        console.log(data_form);
+        // console.log(data_form);
         $.ajax({
             url: '',
             method: 'POST',
