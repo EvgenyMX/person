@@ -40,6 +40,7 @@ form {
     top:0;
     left: 0;
     display: none;
+    overflow: hidden;
 }
 
 .area_person {
@@ -47,10 +48,9 @@ form {
     height: 50px;
     border: 1px solid red;
     position: absolute;
-    top:146.61648559570312px;
-    left: 90px;
 }
 .show {
+    display: block;
     border: 1px solid blue
 }
 .person {
@@ -58,4 +58,7 @@ form {
     width: 150px;
     height: 150px;
     border: 1px solid red;
+}
+.edit {
+    background-color: green
 }
