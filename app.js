@@ -55,10 +55,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 area_click.style.cssText = 'cursor: cell';
             }
         }
-        // if ( !input ) return;
-        // if ( ! area_click.querySelector(`[data-person="${input.id}"] span`) ) return;
-        // let span = area_click.querySelector(`[data-person="${input.id}"] span`);
-
         if ( form.target.classList.contains('add_square') ) {
             let input = form.target;
             let person_id = input.id;
@@ -72,32 +68,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
         }
-
-
-        // console.log(span);
-        // input.addEventListener('input', e => {
-            // console.log();
-            // console.log('input', e.target.value);
-            // let span = area_click.querySelector(`[data-person="${e.target.id}"] span`);
-            // console.log('span',span);
-            // if ( span ) {
-                // span.textContent = e.target.value;
-            // }
-        // });
-
-
-
-        // if ( form.target.classList.contains('data_person') && form.target.classList.contains('add_square') ) {
-        //     let input = form.target;
-        //     console.log(input);
-        // if ( !input ) return;
-
-
-            // if ( area_click.querySelector('area_person') )
-
-
-        // }
-
 
     });
     function clear_active() {
@@ -142,32 +112,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
 
     });
-
-
-    let inputs_p = document.querySelectorAll(".person_input_list input");
-    // ввод имени персонажа
-    inputs_p.forEach( inp => {
-        inp.addEventListener('input', e => {
-            let span = document.querySelector(`.area_person[data-person="${e.target.id}"] span`);
-            if ( span ) {
-                span.textContent = e.target.value;
-            }
-        });
-    });
-
-
-
-    // let input = document.querySelector(`.input#${e.target.id}`);
-    // if ( !input.dataset.location || input.dataset.location == '' ) return;
-    // input.style.cssText = 'cursor: text';
-    // form_person.querySelector(`input#${btn.dataset.person}`).removeAttribute('readonly');
-
-  // Массив всех полей ввода
-
-
-
-
-
     window.addEventListener('resize', function(){
         divRect = area.getBoundingClientRect();
     });
