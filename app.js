@@ -86,9 +86,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // По клику по области над фото, генерируем обводку
     // клик по фото
     area_click.addEventListener("click", e => {
-        let relX = e.pageX - divRect.left - 45;
-        let relY = e.pageY - divRect.top - 25;
-        let location = `top: ${relY}px; left: ${relX}px`;
+        // let relX = e.pageX - divRect.left - 45;
+        // let relY = e.pageY - divRect.top - 25;
+        let relX = 100 * e.pageX  / Math.ceil(divRect.width);
+        let relY = 100 * e.pageY  / Math.ceil(divRect.height);
+
+        console.log(e.pageX);
+        console.log(e.offsetX);
+
+        let location = `top: ${relY/1}%; left: ${relX/1}%`;
         let data_location = JSON.stringify({'y': relY, 'x':relX});
 
         let id_person = e.currentTarget.dataset.person;
@@ -113,7 +119,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     });
     window.addEventListener('resize', function(){
-        divRect = area.getBoundingClientRect();
+        console.log('1');
+        divRect = area_click.getBoundingClientRect();
     });
 
 
