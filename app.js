@@ -86,18 +86,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // По клику по области над фото, генерируем обводку
     // клик по фото
     area_click.addEventListener("click", e => {
-        // let relX = e.pageX - divRect.left - 45;
-        // let relY = e.pageY - divRect.top - 25;
-        let relX = 100 * e.pageX  / Math.ceil(divRect.width);
-        let relY = 100 * e.pageY  / Math.ceil(divRect.height);
+        let divRect = area_click.getBoundingClientRect();
+        let relX = 100 * (e.offsetX-25) / divRect.width;
+        let relY = 100 * (e.offsetY-25 )/ divRect.height;
 
-        console.log(e.pageX);
-        console.log(e.offsetX);
+        let location = `top: ${relY}%; left: ${relX}%`;
 
-        let location = `top: ${relY/1}%; left: ${relX/1}%`;
         let data_location = JSON.stringify({'y': relY, 'x':relX});
 
-        let id_person = e.currentTarget.dataset.person;
+        let id_person = e.target.dataset.person;
         if ( ! id_person ) return;
         let current_input = form_person.querySelector(`input#${id_person}`);
             current_input.style.cssText = 'cursor: text';
@@ -125,19 +122,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 
-    $('form').on('submit', e => {
-        e.preventDefault();
-        let data_form = $('form').serializeArray() ;
-        $.ajax({
-            url: '',
-            method: 'POST',
-            data: {inputs: data_form},
-            success: function(data){
-                alert(data);
-            }
-        });
+    // $('form').on('submit', e => {
+    //     e.preventDefault();
+    //     let data_form = $('form').serializeArray() ;
+    //     $.ajax({
+    //         url: '',
+    //         method: 'POST',
+    //         data: {inputs: data_form},
+    //         success: function(data){
+    //             alert(data);
+    //         }
+    //     });
 
-    });
+    // });
 
 
 
