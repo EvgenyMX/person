@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if ( target.closest('.person_reset') ) {
             let btn_reset = target.closest('.person_reset');
             let person_id = btn_reset.dataset.person;
-            reset_position_marker(person_id);
+            reset_drag_marker(person_id);
             reset_resize_marker(person_id);
         }
     });
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
         let append_pesron_marker = document.querySelector('.area_click__items');
-        let top_new_marer;
+        let top_new_marer = 0;
 
         append_pesron_marker.querySelectorAll('.person--new').forEach( (i, idx, array) => {
             if (idx === array.length - 1){
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             }
         });
 
-        let position = `right: 0; top: ${top_new_marer}px`;
+        let position = `right: 0; top: ${top_new_marer}px; height: 100px; width: 100px;`;
 
         let marker_person_html = `<div class="marker_person person--new"
                                     data-person="p${new_number_person}"
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     function reset_form() {
         return_person();
         reset_marker_text();
-        reset_position_marker(0);
+        reset_drag_marker(0);
     }
 
 
@@ -198,14 +198,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if ( status == 'new' ) {
             marker.target.setAttribute( "data-nleft", (l/100).toFixed(3) );
             marker.target.setAttribute( "data-ntop", (t/100).toFixed(3) );
-        } else {
-            marker.target.setAttribute( "data-oleft", (l/100).toFixed(3) );
-            marker.target.setAttribute( "data-otop", (t/100).toFixed(3) );
         }
         data_person_input.setAttribute("data-marker-change", 'true');
 
     }
-    function reset_position_marker( person_id ) {
+    function reset_drag_marker( person_id ) {
         let old_left, old_top;
         if ( person_id == 0 ) {
             let markers = document.querySelectorAll('.marker_person');
