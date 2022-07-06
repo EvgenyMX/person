@@ -37,9 +37,11 @@ form {
     position: absolute;
     width: 100%;
     height: 100%;
-    top:0;
+    top: 0;
     left: 0;
-    display: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     overflow: hidden;
 }
 
@@ -59,23 +61,38 @@ form {
 .data_person_input input {
     cursor: not-allowed;
 }
-.show {
-    display: block;
-}
 .edit {
     background-color: green
 }
 
 .marker_person {
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.418);
     display: flex;
+    justify-content: center;
     align-self: baseline;
-    width: max-content;
+    margin-left: auto;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    outline: 1px solid red;
+
 }
 .marker_person span {
     padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.418);
+    display: flex;
+    align-self: baseline;
+    margin-top: auto;
 }
 .person--hide {
     display: none;
 }
+
+
+.area_click__items {
+    position: absolute;
+    right: 0;
+    width: 100%;
+
+}
+
