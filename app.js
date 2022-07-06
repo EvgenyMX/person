@@ -1,145 +1,135 @@
 document.addEventListener("DOMContentLoaded", function(event) {
-    // Форма
-    let form_person = document.querySelector("form");
-    // Кнопка добавления поля ввода фио
-    let btn_input_person = document.querySelector('.add_input_person');
+    let image_zone = document.querySelector('.area_click');
+    let form = document.querySelector('form');
 
-    // Область фотографии
-    let area = document.querySelector('.area');
-    // размер элемента и его позиции от области
-    let divRect = area.getBoundingClientRect();
-    // Область над фото для клика
-    let area_click = document.querySelector('.area_click');
+    let btn_add_person = document.querySelector('.add_input_person');
+    let btn_hide_person = document.querySelector('.add_input_person');
 
 
 
-    // Генерируем и вставляем новые поля для определения людей на фото
-    // *+ кнопка добавления обводки человека на фото
-    btn_input_person.addEventListener("click", e => {
-        //получаем все поля(input)
-        let person_inputs = form_person.querySelectorAll(".person_input_list input");
-        //определяем численность полей в форме
-        let count_inputs = person_inputs.length;
-        // Верста обводки с подписью
-        // *все поля обязательны и изначально доступны только для чтения
-        let input = `<span class="data_person_input" data-person="p${count_inputs+1}">
-                        <input id="p${count_inputs+1}" type="text" name="person" required readonly="readonly" class='data_person'>
-                        <button type="button" class="add_person_area" data-area="a${count_inputs+1}" data-person="p${count_inputs+1}">
-                            +
-                        </button>
-                    </span>`;
-        //Добавляем в область над фото
-        btn_input_person.insertAdjacentHTML("beforebegin", input);
+    btn_add_person.addEventListener('click', e => {
+        add_person();
     });
 
-    //Делаем активный инпут и определяем с каким инпутом работаем в области по id
-    form_person.addEventListener('click', form => {
 
-        if ( form.target.classList.contains('add_person_area') || form.target.closest('.add_person_area') ) {
-            let btn = form.target.closest('.add_person_area');
-
-
-            if ( btn.classList.contains('edit') ) {
-                clear_active();
-                area_click.dataset.person = '';
-            } else {
-                let input = form_person.querySelector(`input#${btn.dataset.person}`);
-                clear_active();
-                if ( input.dataset.location && input.dataset.location != '') {
-                    input.style.cssText = 'cursor: text';
-                    input.removeAttribute('readonly');
-                    input.classList.add('add_square');
-                }
-                btn.classList.add('edit');
-                area_click.dataset.person = btn.dataset.person;
-                area_click.style.cssText = 'cursor: cell';
-            }
+    form.addEventListener('click', e => {
+        let target = e.target;
+        if ( target.closest('.person_hide') ) {
+            let btn_hide_person = target.closest('.person_hide');
+            let person_id =  btn_hide_person.dataset.person;
+            console.log(person_id);
+            hide_person( person_id );
         }
-        if ( form.target.classList.contains('add_square') ) {
-            let input = form.target;
-            let person_id = input.id;
-            let square_text = document.querySelector(`.area_person[data-person=${person_id}] span`);
 
+        if ( target.closest('.data_person') ) {
+            let input = target.closest('.data_person');
             input.addEventListener('input', e => {
-                if ( square_text ) {
-                    square_text.textContent = e.target.value;
-                }
+                marker_edit_text( input.dataset.person, e.target.value );
             });
-
-
         }
-
     });
-    function clear_active() {
-        let btn_add_square = form_person.querySelectorAll('.add_person_area');
-        let input_name_square = form_person.querySelectorAll('.add_square');
-        btn_add_square.forEach( btns => {
-            btns.classList.remove('edit');
-        });
-        input_name_square.forEach( inp => {
-            inp.setAttribute('readonly','readonly');
-            inp.classList.remove('add_square');
-            inp.style.cssText = 'cursor: not-allowed';
-        });
-        area_click.style.cssText = 'cursor: default';
+
+    form.addEventListener('reset', e => {
+        reset_form();
+    });
+
+
+
+
+
+
+
+    function lengthInputPerson() {
+        let person_s = document.querySelectorAll('.data_person_input');
+        return person_s.length;
     }
-    // По клику по области над фото, генерируем обводку
-    // клик по фото
-    area_click.addEventListener("click", e => {
-        let relX = e.pageX - divRect.left - 45;
-        let relY = e.pageY - divRect.top - 25;
-        let location = `top: ${relY}px; left: ${relX}px`;
-        let data_location = JSON.stringify({'y': relY, 'x':relX});
 
-        let id_person = e.currentTarget.dataset.person;
-        if ( ! id_person ) return;
-        let current_input = form_person.querySelector(`input#${id_person}`);
-            current_input.style.cssText = 'cursor: text';
-            current_input.removeAttribute('readonly');
-            current_input.classList.add('add_square');
+    function add_person() {
 
-        let square = `<div class='area_person' data-person='${id_person}' style='${location}'>
-                            <span class='area_person__text'></span>
-                        </div>`;
+        let all_input_preson = lengthInputPerson();
+        let new_number_person = all_input_preson + 1;
 
-        if ( area_click.querySelector(`[data-person=${id_person}]`)  ) {
-            area_click.querySelector(`[data-person=${id_person}]`).style.cssText = location;
-            current_input.setAttribute('data-location', data_location);
-            return;
-        } else {
-            current_input.setAttribute('data-location', data_location);
-            area_click.innerHTML += square;
+        let append_pesron_input = document.querySelector('.add_input_person');
+
+        let input_person_html = `<span class="data_person_input person--new" data-person="p${new_number_person}">
+                                    <input type="text" class="data_person" data-person="p${new_number_person}" value="${new_number_person}" data-value="${new_number_person}">
+                                    <button type="button" data-person="p${new_number_person}" class="person_hide">remove</button>
+                                </span>`;
+        let append_pesron_marker = document.querySelector('.area_click');
+        let marker_person_html = `<div class="marker_person person--new"  data-person="p${new_number_person}">
+                                    <span>Отец ${new_number_person}</span>
+                                </div>`;
+
+
+        append_pesron_input.insertAdjacentHTML( "beforebegin", input_person_html );
+        append_pesron_marker.insertAdjacentHTML( "beforeend", marker_person_html );
+
+    }
+
+
+
+    function marker_edit_text( person_id, text ) {
+
+        let marker = document.querySelector(`.marker_person[data-person=${person_id}]`);
+        marker.children[0].textContent = text;
+
+    }
+
+    function hide_person( person_id ) {
+
+        let input_person = document.querySelector(`[data-person=${person_id}]`);
+
+        if ( input_person) input_person.classList.add('person--hide');
+    }
+
+    function reset_form() {
+        return_person();
+        reset_marker_text();
+    }
+
+
+
+    function return_person() {
+        let person_new = document.querySelectorAll('.person--new');
+        if ( person_new.length ) person_new.forEach( el => el.remove() );
+
+        let person_hide = document.querySelectorAll('.person--hide');
+        if ( person_hide.length ) person_hide.forEach( el => el.classList.remove('person--hide') );
+    }
+    function reset_marker_text() {
+        let data_person = document.querySelectorAll('.data_person');
+        data_person.forEach( inp => {
+            console.log(inp);
+            let marker = document.querySelector(`.marker_person[data-person=${inp.dataset.person}]`);
+            marker.children[0].textContent = inp.dataset.value;
+        });
+    }
+
+    function recalculation_person() {  }
+
+
+
+    function drag_person() {
+
+        let markers = document.querySelectorAll('.marker_person');
+        markers.forEach(marker => {
+            marker.onmouseover = marker.onmouseout = drag_event;
+        });
+    }
+    drag_person();
+    function drag_event( event ) {
+        let marker = event.target.closest('.marker_person');
+
+
+        if (event.type == 'mouseover') {
+            $( marker ).draggable({containment: image_zone});
+        }
+        if (event.type == 'mouseout') {
+            $( marker ).draggable( "destroy" );
         }
 
-    });
-    window.addEventListener('resize', function(){
-        divRect = area.getBoundingClientRect();
-    });
 
-
-
-    $('form').on('submit', e => {
-        e.preventDefault();
-        let data_form = $('form').serializeArray() ;
-        $.ajax({
-            url: '',
-            method: 'POST',
-            data: {inputs: data_form},
-            success: function(data){
-                alert(data);
-            }
-        });
-
-    });
-
-
-
-
-
-
-
-
-
+    }
 
 
 });

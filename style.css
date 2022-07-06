@@ -69,3 +69,17 @@ form {
 .edit {
     background-color: green
 }
+
+.marker_person {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.418);
+    display: flex;
+    align-self: baseline;
+    width: max-content;
+}
+.marker_person span {
+    padding: 5px 10px;
+}
+.person--hide {
+    display: none;
+}

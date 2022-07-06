@@ -16,10 +16,17 @@
         <label for="">
             <input type="text" name="pas" id="">
         </label>
-        <label for="" class="person_input_list">
-            Кто<br>
+        <div class="person_input_list">
+            <span class="data_person_input" data-person="p1">
+                <input type="text" class="data_person" data-person="p1" value="Отец 1" data-value="Отец 1">
+                <button type="button" data-person="p1" class="person_hide" >remove</button>
+            </span>
+            <span class="data_person_input" data-person="p2">
+                <input type="text" class="data_person" data-person="p2" value="Отец 2" data-value="Отец 2">
+                <button type="button" data-person="p2" class="person_hide" >remove</button>
+            </span>
             <button type="button" class="add_input_person">Добавить</button>
-        </label>
+        </div>
         <label for="">
             <input type="text" name="emal" id="">
         </label>
@@ -27,10 +34,19 @@
             <input type="text" name="init" id="">
         </label>
         <input type="submit" value="Отправить" class="submit">
+        <input type="reset" value="Сброс" class="reset">
     </form>
 
     <div class="area">
-        <div class="area_click show" data-person=""></div>
+        <div class="area_click show">
+
+            <div class="marker_person"  data-person="p1">
+                <span>Отец 1</span>
+            </div>
+            <div class="marker_person"  data-person="p2">
+                <span>Отец 2</span>
+            </div>
+        </div>
     </div>
 
 
