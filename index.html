@@ -12,29 +12,31 @@
 <body>
 
     <form action="/">
-        <label for="">
+        <!-- <label for="">
             <input type="text" name="text" id="">
         </label>
         <label for="">
             <input type="text" name="pas" id="">
-        </label>
+        </label> -->
         <div class="person_input_list">
             <span class="data_person_input" data-person="p1">
                 <input type="text" class="data_person" data-person="p1" value="Отец 1" data-value="Отец 1">
                 <button type="button" data-person="p1" class="person_hide" >remove</button>
+                <button type="button" data-person="p1" class="person_reset" >reset</button>
             </span>
             <span class="data_person_input" data-person="p2">
                 <input type="text" class="data_person" data-person="p2" value="Отец 2" data-value="Отец 2">
                 <button type="button" data-person="p2" class="person_hide" >remove</button>
+                <button type="button" data-person="p2" class="person_reset" >reset</button>
             </span>
             <button type="button" class="add_input_person">Добавить</button>
         </div>
-        <label for="">
+        <!-- <label for="">
             <input type="text" name="emal" id="">
         </label>
         <label for="">
             <input type="text" name="init" id="">
-        </label>
+        </label> -->
         <input type="submit" value="Отправить" class="submit">
         <input type="reset" value="Сброс" class="reset">
     </form>
@@ -43,10 +45,31 @@
 
         <div class="area_click show">
             <div class="area_click__items"></div>
-            <div class="marker_person"  data-person="p1" data-person="p2" data-oleft="0.634" data-otop="0.211" style="left: 37.7071%; top: 24.0964%; right: unset;" data-nleft="0.377" data-ntop="0.241">
+            <div class="marker_person" data-person="p1"
+                style="left: 37.7071%; top: 24.0964%; right: unset; height: 20%; width: 20%;"
+                data-oleft="0.377"
+                data-otop="0.241"
+                data-nleft="0.377"
+                data-ntop="0.241"
+
+                data-oheight="0.2"
+                data-owidth="0.2"
+                data-nheight="0.2"
+                data-nwidth="0.2"
+                >
                 <span>Отец 1</span>
             </div>
-            <div class="marker_person"  data-person="p2" data-person="p1" data-oleft="0.833" data-otop="0.420" style="left: 65.6187%; top: 44.7791%; right: unset;" data-nleft="0.656" data-ntop="0.448">
+            <div class="marker_person" data-person="p2" style="left: 65.6187%; top: 44.7791%; right: unset;"
+                data-oleft="0.656"
+                data-otop="0.448"
+                data-nleft="0.656"
+                data-ntop="0.448"
+
+                data-oheight="0.2"
+                data-owidth="0.2"
+                data-nheight="0.2"
+                data-nwidth="0.2"
+                >
                 <span>Отец 2</span>
             </div>
         </div>

@@ -28,10 +28,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 marker_edit_text( input.dataset.person, e.target.value );
             });
         }
+
+        if ( target.closest('.person_reset') ) {
+            let btn_reset = target.closest('.person_reset');
+            let person_id = btn_reset.dataset.person;
+            reset_position_marker(person_id);
+            reset_resize_marker(person_id);
+        }
     });
     form.addEventListener('reset', e => {
         reset_form();
     });
+
+
+
     function lengthInputPerson() {
         let person_s = document.querySelectorAll('.data_person_input');
         return person_s;
@@ -52,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                                     <button type="button"  class="person_hide"
                                         data-person="p${new_number_person}"
                                     >remove</button>
+                                    <button type="button" data-person="p${new_number_person}" class="person_reset" >reset</button>
                                 </span>`;
 
         append_pesron_input.insertAdjacentHTML( "beforebegin", input_person_html );
@@ -104,8 +115,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     function reset_form() {
         return_person();
         reset_marker_text();
-        reset_position_marker();
+        reset_position_marker(0);
     }
+
+
+
     function return_person() {
         let person_new = document.querySelectorAll('.person--new');
         if ( person_new.length ) person_new.forEach( el => el.remove() );
@@ -135,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if (event.type == 'mouseover') {
             $( marker ).draggable( {
                 containment: image_zone,
-                cursorAt: {left: $(this).width()/2, top: $(this).height()/2},
+                // cursorAt: {left: $(this).width()/2, top: $(this).height()/2},
                 start: function ( markerEvent, ui ) {
                     write_drag_position( markerEvent, ui, 'old' );
                 },
@@ -150,25 +164,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                 },
             });
-
-
-
-
-        if (event.type == 'mouseover') {
             $( marker ).resizable( {
                 containment: image_zone,
                 start: function ( markerEvent, ui ) {
+                    write_resize_marker(markerEvent, ui, 'old');
                 },
                 stop: function( markerEvent, ui ) {
-
-
+                    write_resize_marker(markerEvent, ui, 'new');
                 },
             });
         }
 
-
-
-        }
 
     }
     function write_drag_position(marker, ui, status) {
@@ -179,8 +185,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let markerHeight = marker.target.offsetHeight;
         let markerWidth = marker.target.offsetWidth;
 
-        console.log(markerHeight/2,markerWidth/2);
-        console.log(left - markerHeight/2);
 
         let person_id = marker.target.dataset.person;
         let data_person_input =  document.querySelector(`.data_person_input[data-person=${person_id}]`);
@@ -190,6 +194,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         marker.target.style.left = l + "%";
         marker.target.style.top = t + "%";
         marker.target.style.right = 'unset';
+
         if ( status == 'new' ) {
             marker.target.setAttribute( "data-nleft", (l/100).toFixed(3) );
             marker.target.setAttribute( "data-ntop", (t/100).toFixed(3) );
@@ -200,9 +205,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
         data_person_input.setAttribute("data-marker-change", 'true');
 
     }
-    function reset_position_marker( person_id = 0) {
+    function reset_position_marker( person_id ) {
         let old_left, old_top;
-
         if ( person_id == 0 ) {
             let markers = document.querySelectorAll('.marker_person');
 
@@ -213,8 +217,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 m.setAttribute("data-nleft", old_left );
                 m.setAttribute("data-ntop", old_top );
 
-                m.style.left = old_left + "%";
-                m.style.top = old_top + "%";
+                m.style.left = old_left*100 + "%";
+                m.style.top = old_top*100 + "%";
             });
 
         } else {
@@ -225,27 +229,77 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 marker.setAttribute("data-nleft", old_left );
                 marker.setAttribute("data-ntop", old_top );
 
-                marker.style.left = old_left + "%";
-                marker.style.top = old_top + "%";
+                marker.style.left = old_left*100 + "%";
+                marker.style.top = old_top*100 + "%";
         }
     }
     action_marker();
 
 
-    // function resizable_marker( event ) {
-    //     let marker = event.target.closest('.marker_person');
-
-
-
-    // }
-
 
     function write_resize_marker(marker, ui, status) {
+        console.log(ui);
+        // console.log( marker.target );
+
+        let height = ui.size.height;
+        let width = ui.size.width;
+
+
+        let person_id = marker.target.dataset.person;
+        let data_person_input =  document.querySelector(`.data_person_input[data-person=${person_id}]`);
+
+        let h = ( 100 * parseFloat( height / parseFloat(image_zone_riseze.width)) ) ;
+        let w = ( 100 * parseFloat( width  / parseFloat(image_zone_riseze.height)) ) ;
+
+        console.log(h);
+        console.log(w);
+
+
+        marker.target.style.height =  h + "%";
+        marker.target.style.width = w + "%";
+        marker.target.style.right = 'unset';
+
+        if ( status == 'new' ) {
+            marker.target.setAttribute( "data-nheight", (h/100).toFixed(3) );
+            marker.target.setAttribute( "data-nwidth", (w/100).toFixed(3) );
+        } else {
+            marker.target.setAttribute( "data-oheight", (h/100).toFixed(3) );
+            marker.target.setAttribute( "data-owidth", (w/100).toFixed(3) );
+        }
+        data_person_input.setAttribute("data-marker-change", 'true');
 
 
     }
-    function reset_resize_marker( person_id = 0) {
+    function reset_resize_marker( person_id ) {
 
+        let old_height, old_width;
+
+        if ( person_id == 0 ) {
+            let markers = document.querySelectorAll('.marker_person');
+
+            markers.forEach( m => {
+                old_height = m.dataset.oheight;
+                old_width = m.dataset.owidth;
+
+                m.setAttribute("data-nheight", old_height );
+                m.setAttribute("data-nwidth", old_width );
+
+                m.style.height = old_height*100 + "%";
+                m.style.width = old_width*100 + "%";
+            });
+
+        } else {
+            let marker = document.querySelector(`.marker_person[data-person=${person_id}]`);
+
+                old_height = marker.dataset.oheight;
+                old_width = marker.dataset.owidth;
+
+                marker.setAttribute("data-nheight", old_height );
+                marker.setAttribute("data-nwidth", old_width );
+
+                marker.style.height = old_height*100 + "%";
+                marker.style.width = old_width*100 + "%";
+        }
     }
 
 });
