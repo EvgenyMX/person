@@ -59,12 +59,8 @@ form {
 .data_person_input input {
     cursor: not-allowed;
 }
-
-
 .show {
     display: block;
-    border: 1px solid blue;
-
 }
 .edit {
     background-color: green

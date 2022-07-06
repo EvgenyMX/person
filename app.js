@@ -43,14 +43,54 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let person_s = document.querySelectorAll('.data_person_input');
         return person_s.length;
     }
+<<<<<<< HEAD
 
     function add_person() {
+=======
+    // По клику по области над фото, генерируем обводку
+    // клик по фото
+    area_click.addEventListener("click", e => {
+        let divRect = area_click.getBoundingClientRect();
+        let relX = 100 * (e.offsetX-25) / divRect.width;
+        let relY = 100 * (e.offsetY-25 )/ divRect.height;
+
+        let location = `top: ${relY}%; left: ${relX}%`;
+
+        let data_location = JSON.stringify({'y': relY, 'x':relX});
+
+        let id_person = e.target.dataset.person;
+        if ( ! id_person ) return;
+        let current_input = form_person.querySelector(`input#${id_person}`);
+            current_input.style.cssText = 'cursor: text';
+            current_input.removeAttribute('readonly');
+            current_input.classList.add('add_square');
+
+        let square = `<div class='area_person' data-person='${id_person}' style='${location}'>
+                            <span class='area_person__text'></span>
+                        </div>`;
+
+        if ( area_click.querySelector(`[data-person=${id_person}]`)  ) {
+            area_click.querySelector(`[data-person=${id_person}]`).style.cssText = location;
+            current_input.setAttribute('data-location', data_location);
+            return;
+        } else {
+            current_input.setAttribute('data-location', data_location);
+            area_click.innerHTML += square;
+        }
+
+    });
+    window.addEventListener('resize', function(){
+        console.log('1');
+        divRect = area_click.getBoundingClientRect();
+    });
+>>>>>>> a008820d0b076335015348815596ebb8aeabb921
 
         let all_input_preson = lengthInputPerson();
         let new_number_person = all_input_preson + 1;
 
         let append_pesron_input = document.querySelector('.add_input_person');
 
+<<<<<<< HEAD
         let input_person_html = `<span class="data_person_input person--new" data-person="p${new_number_person}">
                                     <input type="text" class="data_person" data-person="p${new_number_person}" value="${new_number_person}" data-value="${new_number_person}">
                                     <button type="button" data-person="p${new_number_person}" class="person_hide">remove</button>
@@ -60,6 +100,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
                                     <span>Отец ${new_number_person}</span>
                                 </div>`;
 
+=======
+    // $('form').on('submit', e => {
+    //     e.preventDefault();
+    //     let data_form = $('form').serializeArray() ;
+    //     $.ajax({
+    //         url: '',
+    //         method: 'POST',
+    //         data: {inputs: data_form},
+    //         success: function(data){
+    //             alert(data);
+    //         }
+    //     });
+
+    // });
+>>>>>>> a008820d0b076335015348815596ebb8aeabb921
 
         append_pesron_input.insertAdjacentHTML( "beforebegin", input_person_html );
         append_pesron_marker.insertAdjacentHTML( "beforeend", marker_person_html );
